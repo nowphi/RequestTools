@@ -27,19 +27,7 @@ public class FrontendVeriVox extends BasicFront {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-						
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrontendVeriVox frame = new FrontendVeriVox();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 	
 	public FrontendVeriVox() {
 		super();		
