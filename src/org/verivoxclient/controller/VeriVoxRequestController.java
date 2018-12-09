@@ -7,11 +7,11 @@ import java.util.List;
 import org.verivox.model.VeriVoxQueryAll;
 import org.verivox.model.VeriVoxQueryModel;
 import org.verivox.model.VeriVoxQueryRecommended;
-import org.verivoxclientDAO.HttpsVeriVoxClient;
-import org.verivoxclientDAO.IHttpsVeriVoxClient;
-import org.verivoxclientDAO.LocationPropertiesThread;
-import org.verivoxclientDAO.VeriVoxOffersRequestThread;
-import org.verivoxclientDAO.VeriVoxThread;
+import org.verivoxclient.dao.HttpsVeriVoxClient;
+import org.verivoxclient.dao.IHttpsVeriVoxClient;
+import org.verivoxclient.dao.LocationPropertiesThread;
+import org.verivoxclient.dao.VeriVoxOffersRequestThread;
+import org.verivoxclient.dao.VeriVoxThread;
 
 import json.JSONObject;
 

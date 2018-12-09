@@ -1,4 +1,4 @@
-package org.verivoxclientDAO;
+package org.verivoxclient.dao;
 import java.io.BufferedReader;
 
 import java.io.InputStreamReader;

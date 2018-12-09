@@ -11,7 +11,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import org.verivoxclient.controller.FileListController;
 import org.verivoxclient.controller.VeriVoxRequestController;
-import org.verivoxclientDAO.VeriVoxOffersRequestThread;
+import org.verivoxclient.dao.VeriVoxOffersRequestThread;
 
 
 public class FrontendVeriVox extends BasicFront {
@@ -96,14 +96,15 @@ public class FrontendVeriVox extends BasicFront {
 					provider = comboBoxProvider.getSelectedItem().toString();
 										
 					if(PathPostCodeList != null) {
-						System.out.println(PathPostCodeList);
+						resultarea.append("PostCodeListe gewählt " + PathPostCodeList + "\n"); 
 					} else {
 						resultarea.append("Keine PostleitzahlenListe ausgewählt!\n");
 						return;
 					}
 					
 					if(SavePath != null) {
-						System.out.println(PathPostCodeList);
+						resultarea.append("Speicherpfad gesetzt " + SavePath + "\n"); 
+						System.out.println();
 					} else {
 						resultarea.append("Keine Speicherpfad ausgewählt!\n");
 						return;
@@ -118,15 +119,18 @@ public class FrontendVeriVox extends BasicFront {
 					
 					if(c != 0) {
 					// 0 custom // 1 recommended // 2 all
+					resultarea.append("Initialisiere Abfragemuster ..." + "\n"); 
 					requestController.requestPostCodeList(c, provider);	
 					}
 															
 					String save = SavePath + "/" + filename + annualTotal + "_" + c + ".txt";
+					resultarea.append("Starte Abfrage. Dieser Vorgang kann einen Moment dauern ..." + "\n");
 					
 					List<VeriVoxOffersRequestThread> list = requestController.getVeriVoxOffersRequestThread();
 					
 					if(listService.saveToFile(list , save) == 0 && list.isEmpty() == false) {
 						resultarea.append("Datei gespeichert unter:\n" + save + "\n");
+						resultarea.append("------------------------------------------\n");
 					} else {
 						resultarea.append("Liste konnte nicht abgefragt oder gespeichert werden.\n Bitte überprüfen Sie die Eingabeparameter.\n");
 					}

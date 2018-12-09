@@ -1,4 +1,4 @@
-package org.verivoxclientDAO;
+package org.verivoxclient.dao;
 
 public class LocationPropertiesThread extends VeriVoxThread {
 
