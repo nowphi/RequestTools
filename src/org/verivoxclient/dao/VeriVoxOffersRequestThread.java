@@ -23,6 +23,7 @@ public class VeriVoxOffersRequestThread extends VeriVoxThread  {
 		// TODO Auto-generated method stub
 		VM.toJSONQuery();
 		requestResult =VeriVoxClient.requestOffers(VM, provider);
+
 	}	
 	
 	@Override

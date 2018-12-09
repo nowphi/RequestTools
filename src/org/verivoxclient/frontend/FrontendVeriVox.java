@@ -92,7 +92,7 @@ public class FrontendVeriVox extends BasicFront {
 					if(	rdbtnRecommended.isSelected() ) c = 1; 
 					
 					provider = comboBoxProvider.getSelectedItem().toString();
-										
+					System.out.println(provider);					
 					if(PathPostCodeList != null) {
 						resultarea.append("PostCodeListe gewählt " + PathPostCodeList + "\n"); 
 					} else {

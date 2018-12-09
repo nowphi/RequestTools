@@ -25,7 +25,8 @@ import json.JSONTokener;
 
 public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 	// Eigener Parser für die Response
-	VeriVoxParser vp = new VeriVoxParser();
+	//VeriVoxParser vp = new VeriVoxParser();
+	VeriVoxResponseParser vp = new VeriVoxResponseParser();
 	
 	// Default-URLs
 	private String LOCATION_PROPERTIES_DEFAULT = "https://www.verivox.de/verivoxenergyjsonservices.ashx/getlocationfrompostcode?paolaType=1&postCode=";
@@ -199,7 +200,8 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 		
 				BufferedReader in = new BufferedReader(new InputStreamReader(new GZIPInputStream(connection.getInputStream()),  "UTF-8"));
 				Predicate<String> pre = p -> p.equals(provider); 
-				result = vp.parseResultPredicate(in, pre );
+				vp.parseResponse(in.readLine(), pre);
+				result = vp.toString();
 				in.close();
 					
 				connection.disconnect();

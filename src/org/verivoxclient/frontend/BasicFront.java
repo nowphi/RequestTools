@@ -94,7 +94,7 @@ public class BasicFront extends JFrame {
 			gbc_lblProvider.gridy = 3;
 			getContentPane().add(lblProvider, gbc_lblProvider);
 			
-			String []provider = {"Strom.Manufaktur"};
+			String []provider = {"Strom.Manufaktur", "DREWAG"};
 			comboBoxProvider = new JComboBox<String>(provider);
 			GridBagConstraints gbc_comboBoxProvider;
 			gbc_comboBoxProvider = new GridBagConstraints();
