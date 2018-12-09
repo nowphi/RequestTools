@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.verivoxclient.api.HttpsVeriVoxClient;
-import org.verivoxclient.api.IHttpsVeriVoxClient;
-import org.verivoxclient.api.LocationProperties;
-import org.verivoxclient.api.VeriVoxOffersRequestThread;
-import org.verivoxclient.api.VeriVoxQueryAll;
-import org.verivoxclient.api.VeriVoxQueryModel;
-import org.verivoxclient.api.VeriVoxQueryRecommended;
-import org.verivoxclient.api.VeriVoxThread;
+import org.verivox.model.VeriVoxQueryAll;
+import org.verivox.model.VeriVoxQueryModel;
+import org.verivox.model.VeriVoxQueryRecommended;
+import org.verivoxclientDAO.HttpsVeriVoxClient;
+import org.verivoxclientDAO.IHttpsVeriVoxClient;
+import org.verivoxclientDAO.LocationPropertiesThread;
+import org.verivoxclientDAO.VeriVoxOffersRequestThread;
+import org.verivoxclientDAO.VeriVoxThread;
 
 import json.JSONObject;
 
@@ -21,7 +21,7 @@ public class VeriVoxRequestController {
 	private IHttpsVeriVoxClient vc;
 	
 	private List<String> PostCodeList = new ArrayList<String>();
-	private List<LocationProperties> LocationPropertiesList  = new ArrayList<LocationProperties>();
+	private List<LocationPropertiesThread> LocationPropertiesList  = new ArrayList<LocationPropertiesThread>();
 	private List<VeriVoxOffersRequestThread> VeriVoxOffersRequestThread  = new ArrayList<VeriVoxOffersRequestThread>();
 	int predictedTime;
 	
@@ -42,14 +42,14 @@ public class VeriVoxRequestController {
 	public void createListLocationProperties(int annualTotal) {
 		String postcode;
 	
-		LocationProperties lp = null;
+		LocationPropertiesThread lp = null;
 		for (Iterator<String> it = PostCodeList.listIterator(); it.hasNext();) {
 			postcode = it.next();
 			
 			List<String> paolaTypeIDList = vc.requestPostCodeValue(postcode);
 			
 			if(paolaTypeIDList.size() == 0) {
-				lp = new LocationProperties(postcode, annualTotal, "0", "Kein OT");
+				lp = new LocationPropertiesThread(postcode, annualTotal, "0", "Kein OT");
 				lp.start();
 				LocationPropertiesList.add(lp);
 			} else {
@@ -60,7 +60,7 @@ public class VeriVoxRequestController {
 					String paolaType = jo.getString("value");
 					String paolaText = jo.getString("text");
 					
-					lp = new LocationProperties(postcode, annualTotal, paolaType, paolaText);
+					lp = new LocationPropertiesThread(postcode, annualTotal, paolaType, paolaText);
 					lp.start();
 					LocationPropertiesList.add(lp);
 				}		
@@ -93,9 +93,9 @@ public class VeriVoxRequestController {
 	public void requestPostCodeList(int modus, String provider) {
 		VeriVoxOffersRequestThread requestThread;
 		 VeriVoxQueryModel VM = null;
-		LocationProperties lp = null;
+		 LocationPropertiesThread lp = null;
 		
-		for(Iterator<LocationProperties> threadorator = LocationPropertiesList.listIterator(); threadorator.hasNext();) {
+		for(Iterator<LocationPropertiesThread> threadorator = LocationPropertiesList.listIterator(); threadorator.hasNext();) {
 			lp = threadorator.next();
 	
 			switch(modus) {

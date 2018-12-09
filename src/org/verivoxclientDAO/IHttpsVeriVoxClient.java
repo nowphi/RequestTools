@@ -1,6 +1,8 @@
-package org.verivoxclient.api;
+package org.verivoxclientDAO;
 
 import java.util.List;
+
+import org.verivox.model.VeriVoxQueryModel;
 
 public interface IHttpsVeriVoxClient {
 

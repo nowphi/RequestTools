@@ -1,4 +1,4 @@
-package org.verivoxclient.api;
+package org.verivox.model;
 
 import json.JSONObject;
 

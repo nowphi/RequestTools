@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.verivoxclient.api.VeriVoxOffersRequestThread;
+import org.verivoxclientDAO.VeriVoxOffersRequestThread;
 
 public class FileListController {
 	

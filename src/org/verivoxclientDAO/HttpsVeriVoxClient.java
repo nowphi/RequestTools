@@ -1,4 +1,4 @@
-package org.verivoxclient.api;
+package org.verivoxclientDAO;
 import java.io.BufferedReader;
 
 import java.io.InputStreamReader;
@@ -16,6 +16,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.zip.GZIPInputStream;
 import javax.net.ssl.HttpsURLConnection;
+
+import org.verivox.model.VeriVoxQueryModel;
 
 import json.JSONArray;
 import json.JSONObject;

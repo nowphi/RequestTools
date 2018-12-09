@@ -1,18 +1,18 @@
-package org.verivoxclient.api;
+package org.verivoxclientDAO;
 
-public class LocationProperties extends VeriVoxThread {
+public class LocationPropertiesThread extends VeriVoxThread {
 
 	String PostCode, paolaTypeLocationId, paolaTypeLocationText;
 	int benchmarkTariffId, annualTotal;
 		
-	public LocationProperties(String PostCode, String paolaType, int benchmarkTariffId) {
+	public LocationPropertiesThread(String PostCode, String paolaType, int benchmarkTariffId) {
 		super();
 		this.PostCode = PostCode;
 		this.benchmarkTariffId = benchmarkTariffId;
 		this.paolaTypeLocationId = paolaType;
 	}
 	
-	public LocationProperties(String postcode, int annualTotal, String paolaType, String paolaText) {	
+	public LocationPropertiesThread(String postcode, int annualTotal, String paolaType, String paolaText) {	
 		super();
 		this.PostCode = postcode;
 		this.annualTotal = annualTotal;

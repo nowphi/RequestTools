@@ -1,6 +1,9 @@
-package org.verivoxclient.api;
+package org.verivoxclientDAO;
 
 import java.util.Date;
+
+import org.verivox.model.QueryModel;
+import org.verivox.model.VeriVoxQueryModel;
 
 public class VeriVoxOffersRequestThread extends VeriVoxThread  {
 

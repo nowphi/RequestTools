@@ -1,4 +1,4 @@
-package org.verivoxclient.api;
+package org.verivox.model;
 
 @QueryModel(name = "VeriVoxQueryAll")
 public class VeriVoxQueryAll extends VeriVoxQueryModel {

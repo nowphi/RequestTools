@@ -1,4 +1,4 @@
-package org.verivoxclient.api;
+package org.verivoxclientDAO;
 
 public class VeriVoxThread implements Runnable {
 

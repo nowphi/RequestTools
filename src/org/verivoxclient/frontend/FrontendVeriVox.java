@@ -1,6 +1,5 @@
 package org.verivoxclient.frontend;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -10,9 +9,9 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
-import org.verivoxclient.api.VeriVoxOffersRequestThread;
 import org.verivoxclient.controller.FileListController;
 import org.verivoxclient.controller.VeriVoxRequestController;
+import org.verivoxclientDAO.VeriVoxOffersRequestThread;
 
 
 public class FrontendVeriVox extends BasicFront {
@@ -27,7 +26,6 @@ public class FrontendVeriVox extends BasicFront {
 	/**
 	 * Launch the application.
 	 */
-
 	
 	public FrontendVeriVox() {
 		super();		
