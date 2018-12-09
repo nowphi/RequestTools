@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.verivox.model.VeriVoxQueryAll;
-import org.verivox.model.VeriVoxQueryModel;
-import org.verivox.model.VeriVoxQueryRecommended;
 import org.verivoxclient.dao.HttpsVeriVoxClient;
 import org.verivoxclient.dao.IHttpsVeriVoxClient;
 import org.verivoxclient.dao.LocationPropertiesThread;
 import org.verivoxclient.dao.VeriVoxOffersRequestThread;
 import org.verivoxclient.dao.VeriVoxThread;
+import org.verivoxclient.model.VeriVoxQueryAll;
+import org.verivoxclient.model.VeriVoxQueryModel;
+import org.verivoxclient.model.VeriVoxQueryRecommended;
 
 import json.JSONObject;
 

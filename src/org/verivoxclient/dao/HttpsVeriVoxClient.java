@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 import java.util.zip.GZIPInputStream;
 import javax.net.ssl.HttpsURLConnection;
 
-import org.verivox.model.VeriVoxQueryModel;
+import org.verivoxclient.model.VeriVoxQueryModel;
 
 import json.JSONArray;
 import json.JSONObject;

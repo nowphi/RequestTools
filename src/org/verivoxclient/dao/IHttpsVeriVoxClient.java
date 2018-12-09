@@ -2,7 +2,7 @@ package org.verivoxclient.dao;
 
 import java.util.List;
 
-import org.verivox.model.VeriVoxQueryModel;
+import org.verivoxclient.model.VeriVoxQueryModel;
 
 public interface IHttpsVeriVoxClient {
 

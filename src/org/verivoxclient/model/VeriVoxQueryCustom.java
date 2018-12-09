@@ -1,4 +1,4 @@
-package org.verivox.model;
+package org.verivoxclient.model;
 
 @QueryModel(name = "VeriVoxQueryCustom")
 public class VeriVoxQueryCustom extends VeriVoxQueryModel {

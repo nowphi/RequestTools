@@ -33,8 +33,6 @@ public class FrontendVeriVox extends BasicFront {
 		// FileServiceController
 		listService = new FileListController();
 		
-		
-		
 			btnPostCodeList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
