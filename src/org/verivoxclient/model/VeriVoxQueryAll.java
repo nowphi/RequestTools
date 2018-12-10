@@ -34,6 +34,7 @@ public class VeriVoxQueryAll extends VeriVoxQueryModel {
 				this.setCancellationPeriod_unit(null);
 				this.setCancellationPeriod_amount(-1);
 				this.setIncludesNonEcoTariffs(true);
+		
 	}
 
 	/**
@@ -64,6 +65,9 @@ public class VeriVoxQueryAll extends VeriVoxQueryModel {
 		this.setCancellationPeriod_unit(null);
 		this.setCancellationPeriod_amount(-1);
 		this.setIncludesNonEcoTariffs(true);
+		
+		
+		
 	}
 	
 	@Override

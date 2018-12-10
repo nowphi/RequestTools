@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.zip.GZIPInputStream;
 import javax.net.ssl.HttpsURLConnection;
@@ -24,10 +23,7 @@ import json.JSONObject;
 import json.JSONTokener;
 
 public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
-	// Eigener Parser für die Response
-	//VeriVoxParser vp = new VeriVoxParser();
-	VeriVoxResponseParser vp = new VeriVoxResponseParser();
-	
+
 	// Default-URLs
 	private String LOCATION_PROPERTIES_DEFAULT = "https://www.verivox.de/verivoxenergyjsonservices.ashx/getlocationfrompostcode?paolaType=1&postCode=";
 	private String LOCATION_BenchmarkTarifID_DEFAULT = "https://www.verivox.de/servicehook/benchmarks/electricity/profiles/H0/locations/";
@@ -77,18 +73,17 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 		return (new StringBuilder( Long.toString(verivox_current) ).reverse().toString());
 	}
 	
-	
 	@Override
-	public List<String> requestPostCodeValue(String postcode) {
+	public List<String> requestPostCodeValue(String postCode) {
 	
-		String url_str =(LOCATION_PROPERTIES_DEFAULT + postcode);
+		String urlStr =(LOCATION_PROPERTIES_DEFAULT + postCode);
 		URL url;
 		
 		List<String> list = new ArrayList<String>();
 		BufferedReader input;
 		
 		try {
-			url = new URL( url_str );
+			url = new URL( urlStr );
 		
 			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 				
@@ -133,7 +128,7 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 			connection.setRequestProperty( "Accept",  accept);	
 			connection.setRequestProperty( "Content-Type",  contenttyp);
 			connection.setRequestProperty( "Accept-Encoding",  acceptencoding);	
-		
+					
 			input = new BufferedReader(new InputStreamReader(new GZIPInputStream(connection.getInputStream()),  "UTF-8"));
 	
 			JSONObject jo = new JSONObject(new JSONTokener(input));
@@ -145,6 +140,7 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return -1;
 		}
 		return Integer.parseInt(benchmarkTarifID);
 	}
@@ -159,7 +155,7 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 	}
 	
 	@Override
-	public String requestOffers(VeriVoxQueryModel model, String provider) {
+	public String requestOffers(VeriVoxQueryModel model) {
 		// TODO Auto-generated method stub
 		String result = null;
 		
@@ -175,7 +171,7 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);
-			
+						
 			// Request-Header, Material ist ein VeriVoxTimeStampt, der mit getMaterial() erzeugt wird
 			connection = this.setConnectionRequestProperty(connection);	
 			connection.connect();
@@ -199,9 +195,7 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 				connection.connect();
 		
 				BufferedReader in = new BufferedReader(new InputStreamReader(new GZIPInputStream(connection.getInputStream()),  "UTF-8"));
-				Predicate<String> pre = p -> p.equals(provider); 
-				vp.parseResponse(in.readLine(), pre);
-				result = vp.toString();
+				result = in.readLine();
 				in.close();
 					
 				connection.disconnect();

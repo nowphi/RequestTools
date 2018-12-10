@@ -49,9 +49,9 @@ public class FileListController {
 				fr = new FileWriter(f);
 				BufferedWriter out = new BufferedWriter(fr);
 				
-				out.write("Abgerufen am;TarifSchnellAuswahl;Postleitzahl;Ortsteil;Verbrauch;Treffer;AnbieterRank;AnbieterName;Gesamtkosten;VergleichsAnbieter;VergleichsTariff;VergleichsKosten");
+				out.write("Abgerufen am;TarifSchnellAuswahl;Postleitzahl;Ortsteil;Verbrauch;Treffer;AnbieterRank;AnbieterName;Tarif;Gesamtkosten;VergleichsAnbieter;VergleichsTariff;VergleichsKosten");
 				out.newLine();
-				
+								
 				list.
 					stream().
 					forEach(s -> {

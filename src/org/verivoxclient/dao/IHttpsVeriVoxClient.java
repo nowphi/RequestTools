@@ -44,6 +44,6 @@ public interface IHttpsVeriVoxClient {
 	 * @return A list of the VeriVoxPostCodeValues for the chosen postcode or -1 if there only one district.
 	 */
 
-	public String requestOffers(VeriVoxQueryModel model, String provider);
+	public String requestOffers(VeriVoxQueryModel model);
 	
 }

@@ -42,14 +42,12 @@ public class FrontendVeriVox extends BasicFront {
 						File selectedFile = jfc.getSelectedFile();
 						PathPostCodeList = selectedFile.getAbsolutePath();
 						
-						if(selectedFile.length() > 700) {
-							resultarea.append("PostleitzahlenListe zu groﬂ (zuviele Postleitzahlen). Nur ca. 100 aufeinmal erlaubt!\n");
+						if(selectedFile.length() > 500) {
+							resultarea.append("PostleitzahlenListe zu groﬂ (zuviele Postleitzahlen). Nur ca. 50 aufeinmal erlaubt!\n");
 							PathPostCodeList = null;
 							return;
 						}
-						
-						
-							
+												
 						lbl_File.setText(PathPostCodeList);
 					}
 				}
@@ -92,7 +90,7 @@ public class FrontendVeriVox extends BasicFront {
 					if(	rdbtnRecommended.isSelected() ) c = 1; 
 					
 					provider = comboBoxProvider.getSelectedItem().toString();
-					System.out.println(provider);					
+					
 					if(PathPostCodeList != null) {
 						resultarea.append("PostCodeListe gew‰hlt " + PathPostCodeList + "\n"); 
 					} else {
@@ -110,19 +108,29 @@ public class FrontendVeriVox extends BasicFront {
 							
 					PostCodeList = listService.loadPostCodeListFromFile(PathPostCodeList); 
 					requestController = new VeriVoxRequestController(PostCodeList);
-						
+					
 					// LocationID
 					requestController.createListLocationProperties(annualTotal);
 					resultarea.append("Get Locations. Size: " + requestController.getSizePostCodeLocationList() + "\n"); 
+					resultarea.update(resultarea.getGraphics());
+					
+					String save = SavePath + "/" + filename + annualTotal + "_" + c + ".txt";
+					
+					resultarea.append("Starte Abfrage. Dieser Vorgang kann einen Moment dauern ..." + "\n");								
+					resultarea.update(resultarea.getGraphics());
+					
+					try {
+						Thread.sleep( 2000 );
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 					if(c != 0) {
 					// 0 custom // 1 recommended // 2 all
 					resultarea.append("Initialisiere Abfragemuster ..." + "\n"); 
 					requestController.requestPostCodeList(c, provider);	
 					}
-															
-					String save = SavePath + "/" + filename + annualTotal + "_" + c + ".txt";
-					resultarea.append("Starte Abfrage. Dieser Vorgang kann einen Moment dauern ..." + "\n");
 					
 					List<VeriVoxOffersRequestThread> list = requestController.getVeriVoxOffersRequestThread();
 					

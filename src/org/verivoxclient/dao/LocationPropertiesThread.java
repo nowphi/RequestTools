@@ -45,8 +45,7 @@ public class LocationPropertiesThread extends VeriVoxThread {
 		return String.join(delimiter, PostCode, paolaTypeLocationId, Integer.toString(benchmarkTariffId));
 	}	
 	@Override
-	public void run() {
-		// TODO Auto-generated method stub
+	public void run()  {
 		benchmarkTariffId = VeriVoxClient.requestBenchmarkTarifID(annualTotal, PostCode, paolaTypeLocationId);
 	}
 }
