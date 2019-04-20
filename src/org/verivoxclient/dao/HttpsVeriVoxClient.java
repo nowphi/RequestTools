@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import java.util.function.Supplier;
 import java.util.zip.GZIPInputStream;
 import javax.net.ssl.HttpsURLConnection;
 
+import org.brotli.dec.BrotliInputStream;
 import org.verivoxclient.model.VeriVoxQueryModel;
 
 import json.JSONArray;
@@ -76,7 +78,9 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 	@Override
 	public List<String> requestPostCodeValue(String postCode) {
 	
-		String urlStr =(LOCATION_PROPERTIES_DEFAULT + postCode);
+	//	String urlStr =(LOCATION_PROPERTIES_DEFAULT + postCode);
+		String urlStr = "https://www.verivox.de/servicehook/locations/electricity/postCode/"+postCode;
+		//String urlStr = "http://www.verivox.de/servicehook/locations/electricity/postCode/"+postCode;
 		URL url;
 		
 		List<String> list = new ArrayList<String>();
@@ -84,20 +88,27 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 		
 		try {
 			url = new URL( urlStr );
-		
+		//	URLConnection connection = url.openConnection();
 			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-				
+	
+			// Diese Parameter müssen bei abweichenden als Code 2** angepasst werden
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty( "Accept",  "application/json, text/plain, application/vnd.verivox.energyLocation-v3+json");	
+			connection.setRequestProperty( "Accept-Encoding",  acceptencoding);	
+			connection.setRequestProperty( "user-agent",  "*");	
+
 			input = new BufferedReader(new InputStreamReader(connection.getInputStream(),  "UTF-8"));
-	
+			
 			JSONObject jo = new JSONObject(new JSONTokener(input));
-			input.close();
-			connection.disconnect();
+			jo.getJSONArray("locationList").forEach(s -> list.add(s.toString()));
 		
-			jo.getJSONArray("result").forEach(s -> list.add(s.toString()));
-	
+			input.close();
+			
+			connection.disconnect();
+
 			} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+				System.out.println(e);
 			}
 		return list;
 	}
@@ -122,16 +133,20 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 			urlStr = LOCATION_BenchmarkTarifID_DEFAULT + postcode + "/?usage=" + annualTotal;
 		
 		try {
+			System.out.println(urlStr);
 			urlObj = new URL( urlStr );
 		
 			HttpsURLConnection connection = (HttpsURLConnection) urlObj.openConnection();
 			connection.setRequestProperty( "Accept",  accept);	
 			connection.setRequestProperty( "Content-Type",  contenttyp);
 			connection.setRequestProperty( "Accept-Encoding",  acceptencoding);	
-					
-			input = new BufferedReader(new InputStreamReader(new GZIPInputStream(connection.getInputStream()),  "UTF-8"));
+			connection.setRequestProperty( "user-agent",  "*");	
 	
+			// 20.04.2019 von gzip auf br 
+			input = new BufferedReader(new InputStreamReader(new BrotliInputStream(connection.getInputStream()),  "UTF-8"));
+		
 			JSONObject jo = new JSONObject(new JSONTokener(input));
+	
 			input.close();
 			JSONArray ja = jo.getJSONArray("providers");
 			
@@ -149,6 +164,7 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 		connection.setRequestProperty( "Accept",  accept);	
 		connection.setRequestProperty( "Content-Type",  contenttyp);
 		connection.setRequestProperty( "Accept-Encoding",  acceptencoding);	
+		connection.setRequestProperty( "user-agent",  "*");	
 		connection.setRequestProperty( "Material",  supMaterial.get());
 		
 		return connection;
@@ -194,7 +210,8 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 				
 				connection.connect();
 		
-				BufferedReader in = new BufferedReader(new InputStreamReader(new GZIPInputStream(connection.getInputStream()),  "UTF-8"));
+				BufferedReader in = new BufferedReader(new InputStreamReader(new BrotliInputStream(connection.getInputStream()),  "UTF-8"));
+			//	BufferedReader in = new BufferedReader(new InputStreamReader(new GZIPInputStream(connection.getInputStream()),  "UTF-8"));
 				result = in.readLine();
 				in.close();
 					

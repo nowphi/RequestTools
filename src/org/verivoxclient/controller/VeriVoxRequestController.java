@@ -57,8 +57,8 @@ public class VeriVoxRequestController {
 					
 					JSONObject jo = new JSONObject(itert.next());
 				
-					String paolaType = jo.getString("value");
-					String paolaText = jo.getString("text");
+					String paolaType = jo.getString("id");
+					String paolaText = jo.getString("partName");
 					
 					lp = new LocationPropertiesThread(postcode, annualTotal, paolaType, paolaText);
 					lp.start();
