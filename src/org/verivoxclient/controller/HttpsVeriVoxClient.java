@@ -1,11 +1,10 @@
-package org.verivoxclient.dao;
+package org.verivoxclient.controller;
 import java.io.BufferedReader;
 
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.zip.GZIPInputStream;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.brotli.dec.BrotliInputStream;
@@ -27,9 +25,15 @@ import json.JSONTokener;
 public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 
 	// Default-URLs
-	private String LOCATION_PROPERTIES_DEFAULT = "https://www.verivox.de/verivoxenergyjsonservices.ashx/getlocationfrompostcode?paolaType=1&postCode=";
-	private String LOCATION_BenchmarkTarifID_DEFAULT = "https://www.verivox.de/servicehook/benchmarks/electricity/profiles/H0/locations/";
+	//private String LOCATION_PROPERTIES_DEFAULT = "https://www.verivox.de/verivoxenergyjsonservices.ashx/getlocationfrompostcode?paolaType=1&postCode=";
+	//private String LOCATION_BenchmarkTarifID_DEFAULT = "https://www.verivox.de/servicehook/benchmarks/electricity/profiles/H0/locations/";
+//	String urlStr = "https://www.verivox.de/servicehook/locations/electricity/postCode/"+postCode;
 	
+	// *** https://www.verivox.de/ ohne DNS direkt IP 104.17.83.237:443 ***
+	String protocol = "https";
+	String host = "www.verivox.de";
+	int port = 443;
+			
 	// Definition des Request-Headers: JSON akzeptiert, Kompression gzip
 	private final String accept = "application/json";	
 	private final String contenttyp = "application/json"; 
@@ -78,17 +82,15 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 	@Override
 	public List<String> requestPostCodeValue(String postCode) {
 	
-	//	String urlStr =(LOCATION_PROPERTIES_DEFAULT + postCode);
-		String urlStr = "https://www.verivox.de/servicehook/locations/electricity/postCode/"+postCode;
-		//String urlStr = "http://www.verivox.de/servicehook/locations/electricity/postCode/"+postCode;
+		String file = "/servicehook/locations/electricity/postCode/" + postCode;
 		URL url;
 		
 		List<String> list = new ArrayList<String>();
 		BufferedReader input;
 		
 		try {
-			url = new URL( urlStr );
-		//	URLConnection connection = url.openConnection();
+			url = new URL( protocol,  host,  port,  file);
+
 			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 	
 			// Diese Parameter müssen bei abweichenden als Code 2** angepasst werden
@@ -125,16 +127,17 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 		URL urlObj;
 		BufferedReader input;
 		
-		String benchmarkTarifID = null, urlStr;
+		String benchmarkTarifID = null,  file;
 		
-		if(paolaType.equals("0") == false) 
-			urlStr = LOCATION_BenchmarkTarifID_DEFAULT + postcode + "/" +paolaType +"/?usage=" + annualTotal;
-		else 
-			urlStr = LOCATION_BenchmarkTarifID_DEFAULT + postcode + "/?usage=" + annualTotal;
+		if(paolaType.equals("0") == false) {
+			file = "/servicehook/benchmarks/electricity/profiles/H0/locations/" + postcode + "/" + paolaType +"/?usage=" + annualTotal;
+		}else {
+			file = "/servicehook/benchmarks/electricity/profiles/H0/locations/" + postcode + "/?usage=" + annualTotal;
+		}
 		
 		try {
-			System.out.println(urlStr);
-			urlObj = new URL( urlStr );
+			urlObj = new URL( protocol,  host,  port,  file);
+			//System.out.println(urlObj.toURI());
 		
 			HttpsURLConnection connection = (HttpsURLConnection) urlObj.openConnection();
 			connection.setRequestProperty( "Accept",  accept);	
@@ -160,7 +163,7 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 		return Integer.parseInt(benchmarkTarifID);
 	}
 
-	public HttpsURLConnection setConnectionRequestProperty(HttpsURLConnection connection ) {
+	private HttpsURLConnection setConnectionRequestProperty(HttpsURLConnection connection ) {
 		connection.setRequestProperty( "Accept",  accept);	
 		connection.setRequestProperty( "Content-Type",  contenttyp);
 		connection.setRequestProperty( "Accept-Encoding",  acceptencoding);	
@@ -207,7 +210,6 @@ public class HttpsVeriVoxClient implements IHttpsVeriVoxClient {
 				connection = (HttpsURLConnection) location.openConnection();
 				connection.setRequestMethod("GET");
 				connection = this.setConnectionRequestProperty(connection);	
-				
 				connection.connect();
 		
 				BufferedReader in = new BufferedReader(new InputStreamReader(new BrotliInputStream(connection.getInputStream()),  "UTF-8"));

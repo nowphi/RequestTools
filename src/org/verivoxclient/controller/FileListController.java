@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.verivoxclient.dao.VeriVoxOffersRequestThread;
-
 public class FileListController {
 	
 	public List<String> loadPostCodeListFromFile(String filename) {

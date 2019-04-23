@@ -1,4 +1,4 @@
-package org.verivoxclient.dao;
+package org.verivoxclient.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,8 +18,7 @@ public class VeriVoxOffersRequestThread extends VeriVoxThread  {
 	
 	List<VeriVoxResponseModel>  result;
 	
-	String requestResult;
-	String provider;
+	String requestResult, provider;
 	Date date = new Date();
 	
 	public VeriVoxOffersRequestThread(VeriVoxQueryModel model, String provider ) {

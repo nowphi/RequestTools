@@ -10,15 +10,15 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 import org.verivoxclient.controller.FileListController;
-import org.verivoxclient.controller.VeriVoxRequestController;
-import org.verivoxclient.dao.VeriVoxOffersRequestThread;
+import org.verivoxclient.controller.VeriVoxOffersRequestThread;
+import org.verivoxclient.dao.VeriVoxRankDao;
 
 
 public class FrontendVeriVox extends BasicFront {
 
 	private static final long serialVersionUID = 1L;
 	private FileListController listService;
-	private VeriVoxRequestController requestController;
+	private VeriVoxRankDao requestController;
 	private List<String> PostCodeList;
 	
 	String PathPostCodeList, SavePath, filename, provider;
@@ -107,7 +107,7 @@ public class FrontendVeriVox extends BasicFront {
 					}
 							
 					PostCodeList = listService.loadPostCodeListFromFile(PathPostCodeList); 
-					requestController = new VeriVoxRequestController(PostCodeList);
+					requestController = new VeriVoxRankDao(PostCodeList);
 					
 					// LocationID
 					requestController.createListLocationProperties(annualTotal);
@@ -126,13 +126,15 @@ public class FrontendVeriVox extends BasicFront {
 						e.printStackTrace();
 					}
 					
+					List<VeriVoxOffersRequestThread> list = null;
 					if(c != 0) {
 					// 0 custom // 1 recommended // 2 all
 					resultarea.append("Initialisiere Abfragemuster ..." + "\n"); 
-					requestController.requestPostCodeList(c, provider);	
+					//requestController.requestPostCodeList(c, provider);	
+					list = requestController.requestPostCodeList(c, provider);
 					}
 					
-					List<VeriVoxOffersRequestThread> list = requestController.getVeriVoxOffersRequestThread();
+					//List<VeriVoxOffersRequestThread> list = requestController.getVeriVoxOffersRequestThread();
 					
 					if(listService.saveToFile(list , save) == 0 && list.isEmpty() == false) {
 						resultarea.append("Datei gespeichert unter:\n" + save + "\n");

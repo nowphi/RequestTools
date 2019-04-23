@@ -1,4 +1,4 @@
-package org.verivoxclient.dao;
+package org.verivoxclient.controller;
 
 import java.util.List;
 

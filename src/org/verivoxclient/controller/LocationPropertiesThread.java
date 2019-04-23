@@ -1,4 +1,4 @@
-package org.verivoxclient.dao;
+package org.verivoxclient.controller;
 
 public class LocationPropertiesThread extends VeriVoxThread {
 
@@ -39,11 +39,7 @@ public class LocationPropertiesThread extends VeriVoxThread {
 	public int annualTotal() {
 		return annualTotal;
 	}
-	@Override
-	public String toString() {
-		String delimiter = " ";
-		return String.join(delimiter, PostCode, paolaTypeLocationId, Integer.toString(benchmarkTariffId));
-	}	
+
 	@Override
 	public void run()  {
 		benchmarkTariffId = VeriVoxClient.requestBenchmarkTarifID(annualTotal, PostCode, paolaTypeLocationId);

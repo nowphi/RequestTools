@@ -8,5 +8,8 @@ This code uses a reference implementation from https://github.com/stleary/JSON-j
 
 The package for json parsing compiles on Java 1.6-1.8 and is absolutely needed to run the application! Thanks to org.json and gson.
 
-Release history: 10.12.2018 - Refactored.
-Release history: 08.12.2018 - Version 1.0 is released.
+
+Release history:
+23.04.2018 - Refactored 1.1. 
+10.12.2018 - Refactored.
+08.12.2018 - Version 1.0 is released.
